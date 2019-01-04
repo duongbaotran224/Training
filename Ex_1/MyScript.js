@@ -25,11 +25,12 @@ b = function(n){
 }
 // 1.b - cach 2
 b = function(n){
+  ans = '\n'
   for(i=1; i <= n ; i++){
     star = "*"
-    ans = star.repeat(i)
-    console.log(ans)
+    ans += star.repeat(n) + '\n'
   }
+  console.log(ans)
 }
 
 
@@ -45,11 +46,12 @@ c = function(n){
 }
 //1.c - cach 2
 c = function(n){
- for(i=n; i > 0; i--){
-   star = "*"
-   ans = star.repeat(i)
-   console.log(ans)
- }
+  ans = '\n'
+  for(i=n; i > 0; i--){
+    star = "*"
+    ans += star.repeat(i) + '\n'
+  }
+  console.log(ans)
 }
 
 // 3
