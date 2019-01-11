@@ -15,7 +15,7 @@ function isValidation(b1, w1, b2, w2, ground) {
   check_w2 = 0 <= w2 <= 3 ? true : false
   check_b2 = 1 < b2 < 888 ? true : false
   check_ground = 1 < ground < 999 ? true : false
-  if(!(check_b1 && check_b2) && (check_w1 && check_w2 && check_ground)) {
+  if(!((check_b1 && check_b2) && (check_w1 && check_w2 && check_ground))) {
     throw Error('It is not valid input')
   }
 }
