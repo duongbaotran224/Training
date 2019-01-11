@@ -10,7 +10,7 @@ function isInt(...args) {
 
 function isValidation(b1, w1, b2, w2, ground) {
   isInt(b1, w1, b2, w2, ground)
-  check_b1 = 99 < b1 && isInt(b1) < 999 ? true : false
+  check_b1 = 99 < b1 < 999 ? true : false
   check_w1_w2 = 0 <= w1 || w2 <= 3 ? true : false
   check_b2 = 1 < b2 < 888 ? true : false
   check_ground = 1 < ground < 999 ? true : false
