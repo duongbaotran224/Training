@@ -49,43 +49,42 @@ function calc_Real (base, wp, ground) {
 
 function main(baseHP1, wp1, baseHP2, wp2, ground) {
 
+  //check input
   isValidation(baseHP1, wp1, baseHP2, wp2, ground)
 
   var result = 1
+
+  //xet truong hop co hay khong co vu khi & loi the dia hinh
   const real_1 = calc_Real(baseHP1, wp1, ground)
   const real_2 = calc_Real(baseHP2, wp2, ground)
-  console.log(real_1, real_2)
 
+  // xet cac truong hop dac biet tra thang ket qua
   if(baseHP1 === 999){
-    console.log('case 1')
     result = 1
   }
   else if (baseHP2 === 888 && 99 < baseHP1 < 999) {
-    console.log('case 2')
     result = 0
   }
   else if (isPrime(baseHP1) && isPrime(baseHP2)) {
-   console.log('case 3')
     result = 0.5
   }
   else if (isPrime(baseHP1) && !isPrime(baseHP2)) {
-    console.log('case 4')
     result = 0.01
   }
   else if (isPrime(baseHP2) && !isPrime(baseHP1)) {
-    console.log('case 5')
     result = 0.99
   }
+
+  // tinh realHP dua tren cac loai vu khi dac biet
   else if (wp1 === 3) {
     realHP_1 = (real_1 * 2) > 999 ? 999 : real_1 * 2
     realHP_2 = real_2
     result = (realHP_1 - realHP_2 + 999)/2000
-    console.log('case 6')
   }
   else if ((wp1 === 2 && real_1 < real_2) || (wp2 === 2 & real_2 < real_1)) {
-   console.log('case 7')
     result = 0.5
   }
+
   else result = (real_1 - real_2 + 999)/2000
   return result.toFixed(2)
 }
