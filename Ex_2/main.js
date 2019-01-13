@@ -63,7 +63,7 @@ function main(baseHP1, wp1, baseHP2, wp2, ground) {
   if(baseHP1 === 999){
     result = 1
   }
-  else if (baseHP2 === 888 && 99 < baseHP1 < 999) {
+  else if (baseHP2 === 888 && (baseHP1 > 99 && baseHP1 < 999)) {
     result = 0
   }
   else if (isPrime(baseHP1) && isPrime(baseHP2)) {
