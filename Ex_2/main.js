@@ -35,13 +35,13 @@ function calc_Real (base, wp, ground) {
     x = Math.floor(base/10)
     ans = x + (x * 0.1)
   }
-  else if (ground === base && 0 < wp <= 3) {
+  else if (ground === base && (wp > 0 && wp <= 3)) {
     ans = base + (base * 0.1)
   }
   else if(ground !== base && wp === 0){
     ans = Math.floor(base/10)
   }
-  else if(ground !== base && 0 < wp <= 3){
+  else if(ground !== base && (wp > 0 && wp <= 3)){
     ans = base
   }
   else ans = null
@@ -82,7 +82,7 @@ function main(baseHP1, wp1, baseHP2, wp2, ground) {
     realHP_2 = real_2
     result = (realHP_1 - realHP_2 + 999)/2000
   }
-  else if ((wp1 === 2 && real_1 < real_2) || (wp2 === 2 & real_2 < real_1)) {
+  else if ((wp1 === 2 && real_1 < real_2) || (wp2 === 2 && real_2 < real_1)) {
     result = 0.5
   }
 
