@@ -46,3 +46,4 @@ class Square extends Shape {
     const S = this.a * this.a
     console.log(S)
   }
+}
