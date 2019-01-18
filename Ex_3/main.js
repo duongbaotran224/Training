@@ -3,7 +3,7 @@ class Shape {
     this.type = type
   }
   getArea() {
-    console.log(this.type)
+    return "Desire:"
   }
 }
 
@@ -18,7 +18,7 @@ class Triangle extends Shape {
  getArea() {
    const p = (this.a + this.b + this.c)/2
    const n = p * (p - this.a) * (p - this.b) * (p - this.c)
-   const S = Math.sqrt(n)
+   const S = `${super.getArea()} ${Math.sqrt(n)}`
    console.log(S)
  }
 }
@@ -31,7 +31,7 @@ class Rectangle extends Shape {
     this.b = b
   }
  getArea() {
-   const S = this.a * this.b
+   const S = `${super.getArea()} ${this.a * this.b}`
    console.log(S)
  }
 }
@@ -43,7 +43,7 @@ class Square extends Shape {
     this.a = a
   }
   getArea(){
-    const S = this.a * this.a
+    const S = `${super.getArea()} ${this.a * this.a}`
     console.log(S)
   }
 }
