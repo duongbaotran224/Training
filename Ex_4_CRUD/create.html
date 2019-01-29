@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+  </head>
+
+  <body>
+    <h1 style="text-align: center">Create</h1>
+    <form id="create_user" style="margin-bottom: 30px">
+      <input id="name" type="text" placeholder="Name"></input>
+      <input id="birthday" type="date" placeholder="Birthday"></input>
+      <input id="country" placeholder="Country"></input>
+      <input id="email" type="email" placeholder="Email"></input>
+      <input id="phone" type="tel" placeholder="Phone Number"></input>
+    </form>
+    <div style="display: flex; justify-content: center">
+      <a id="back" href="index.html">Back</a>
+      <button id="create" onClick="apiCreate()">Create</button>
+    </div>
+  </body>
+  <script src="./main.js"></script>
+</html>
