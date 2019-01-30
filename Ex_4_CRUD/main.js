@@ -47,6 +47,7 @@ function apiRenderAll() {
 
   for (let i = 0; i < all_users.length; i++) {
     var tr = document.createElement('tr');
+    tr.onclick = () => apiGoToDetail(all_users[i].id_user)
     var td_num = document.createElement('td');
     var td_name = document.createElement('td');
     var td_birthday = document.createElement('td');
@@ -57,7 +58,7 @@ function apiRenderAll() {
     var button_up = document.createElement('button');
     var button_up_text = document.createTextNode('Update');
     button_up.id = "update"
-    button_up.onclick = () => apiUpdate(all_users[i].id_user)
+    button_up.onclick = () => apiGoToEdit(all_users[i].id_user)
     var button_del = document.createElement('button');
     var button_del_text = document.createTextNode('Delete');
     button_del.id = "delete"
@@ -100,21 +101,64 @@ function apiCreate() {
 }
 
 function apiDelete(id_user) {
-  data.deleteUser(id_user)
-  data.writeLocal()
-  location.reload()
+  event.stopPropagation()
+  var confirmDel = confirm('Are you sure?');
+  if(confirmDel == true) {
+    data.deleteUser(id_user)
+    data.writeLocal()
+    location.reload()
+  }
 }
 
-function apiUpdate(id_user) {
+function apiGoToEdit(id_user) {
+  event.stopPropagation();
   const get_cur_user = data.getUser(id_user)
   localStorage.setItem('cur_user', JSON.stringify(get_cur_user))
   window.location.href = `edit.html`
+}
+
+function apiShowUser() {
   const parse_cur_user = JSON.parse(localStorage.getItem('cur_user'))
   const cur_user = parse_cur_user ? parse_cur_user : {}
-  console.log(cur_user)
   document.getElementById("name").value = cur_user["name"]
   document.getElementById("birthday").value = cur_user["birthday"]
   document.getElementById("country").value = cur_user["country"]
   document.getElementById("email").value = cur_user["email"]
   document.getElementById("phone").value = cur_user["phone"]
+}
+
+function apiUpdate() {
+  const cur_user = JSON.parse(localStorage.getItem('cur_user'))
+  const inp_name = document.getElementById("name").value
+  const inp_birthday = document.getElementById("birthday").value
+  const inp_country = document.getElementById("country").value
+  const inp_email = document.getElementById("email").value
+  const inp_phone = document.getElementById("phone").value
+  const user = {
+    id_user: cur_user['id_user'],
+    name: inp_name,
+    birthday: inp_birthday,
+    country: inp_country,
+    email: inp_email,
+    phone: inp_phone
+  }
+  data.updateUser(user)
+  data.writeLocal()
+  window.history.back()
+}
+
+function apiGoToDetail(id_user) {
+  const get_cur_user = data.getUser(id_user)
+  localStorage.setItem('cur_user', JSON.stringify(get_cur_user))
+  window.location.href = `detail.html`
+}
+
+function apiRenderUserInfo() {
+  const parse_cur_user = JSON.parse(localStorage.getItem('cur_user'))
+  const cur_user = parse_cur_user ? parse_cur_user : {}
+  document.getElementById("name").innerText = cur_user["name"]
+  document.getElementById("birthday").innerText = cur_user["birthday"]
+  document.getElementById("country").innerText = cur_user["country"]
+  document.getElementById("email").innerText = cur_user["email"]
+  document.getElementById("phone").innerText = cur_user["phone"]
 }
