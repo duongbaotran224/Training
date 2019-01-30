@@ -106,8 +106,11 @@ function apiDelete(id_user) {
 }
 
 function apiUpdate(id_user) {
+  const get_cur_user = data.getUser(id_user)
+  localStorage.setItem('cur_user', JSON.stringify(get_cur_user))
   window.location.href = `edit.html`
-  const cur_user = data.getUser(id_user)
+  const parse_cur_user = JSON.parse(localStorage.getItem('cur_user'))
+  const cur_user = parse_cur_user ? parse_cur_user : {}
   console.log(cur_user)
   document.getElementById("name").value = cur_user["name"]
   document.getElementById("birthday").value = cur_user["birthday"]
