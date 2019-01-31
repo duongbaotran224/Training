@@ -25,6 +25,7 @@ class Data {
     }
   }
   writeLocal() {
+    console.log('write', localStorage.cur_user)
     localStorage.setItem('list_users', JSON.stringify(this.list_users))
   }
 }
@@ -42,28 +43,37 @@ function makeID () {
   return text_id
 }
 
+// render all data to index.html
 function apiRenderAll() {
-  const all_users = data.getAllUser()
-
+  const all_users = data.getAllUser() // get all data from localStorage
+  // add rows to table
   for (let i = 0; i < all_users.length; i++) {
     var tr = document.createElement('tr');
-    tr.onclick = () => apiGoToDetail(all_users[i].id_user)
+    tr.onclick = () => apiRedirect(all_users[i].id_user, 'detail.html')
+
+    // createElement of row
     var td_num = document.createElement('td');
     var td_name = document.createElement('td');
     var td_birthday = document.createElement('td');
     var td_action = document.createElement('td');
+    var button_del = document.createElement('button');
+    var button_up = document.createElement('button');
+
+    // createTextNode of element
     var numText = document.createTextNode(i + 1);
     var nameText = document.createTextNode(all_users[i].name);
     var birthdayText = document.createTextNode(all_users[i].birthday);
-    var button_up = document.createElement('button');
     var button_up_text = document.createTextNode('Update');
-    button_up.id = "update"
-    button_up.onclick = () => apiGoToEdit(all_users[i].id_user)
-    var button_del = document.createElement('button');
     var button_del_text = document.createTextNode('Delete');
+
+    button_up.id = "update"
     button_del.id = "delete"
+
+    // add event to btn
+    button_up.onclick = () => apiRedirect(all_users[i].id_user, "edit.html")
     button_del.onclick = () => apiDelete(all_users[i].id_user)
 
+    // append data to element
     td_num.appendChild(numText);
     td_name.appendChild(nameText);
     td_birthday.appendChild(birthdayText);
@@ -81,6 +91,7 @@ function apiRenderAll() {
   }
 }
 
+// create & add a new user to localStorage
 function apiCreate() {
   const inp_name = document.getElementById("name").value
   const inp_birthday = document.getElementById("birthday").value
@@ -100,6 +111,7 @@ function apiCreate() {
   window.history.back()
 }
 
+// delete a user
 function apiDelete(id_user) {
   event.stopPropagation()
   var confirmDel = confirm('Are you sure?');
@@ -110,13 +122,16 @@ function apiDelete(id_user) {
   }
 }
 
-function apiGoToEdit(id_user) {
-  event.stopPropagation();
-  const get_cur_user = data.getUser(id_user)
-  localStorage.setItem('cur_user', JSON.stringify(get_cur_user))
-  window.location.href = `edit.html`
-}
+/* store selected user in localStorage
+ before rediect page */
+ function apiRedirect(id_user, page) {
+   event.stopPropagation();
+   const get_cur_user = data.getUser(id_user)
+   localStorage.setItem('cur_user', JSON.stringify(get_cur_user))
+   window.location.href = page
+ }
 
+// display selected user's info in edit page
 function apiShowUser() {
   const parse_cur_user = JSON.parse(localStorage.getItem('cur_user'))
   const cur_user = parse_cur_user ? parse_cur_user : {}
@@ -129,30 +144,21 @@ function apiShowUser() {
 
 function apiUpdate() {
   const cur_user = JSON.parse(localStorage.getItem('cur_user'))
-  const inp_name = document.getElementById("name").value
-  const inp_birthday = document.getElementById("birthday").value
-  const inp_country = document.getElementById("country").value
-  const inp_email = document.getElementById("email").value
-  const inp_phone = document.getElementById("phone").value
   const user = {
     id_user: cur_user['id_user'],
-    name: inp_name,
-    birthday: inp_birthday,
-    country: inp_country,
-    email: inp_email,
-    phone: inp_phone
+    name: document.getElementById("name").value,
+    birthday: document.getElementById("birthday").value,
+    country: document.getElementById("country").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value
   }
   data.updateUser(user)
   data.writeLocal()
+  localStorage.setItem('cur_user', JSON.stringify(user))
   window.history.back()
 }
 
-function apiGoToDetail(id_user) {
-  const get_cur_user = data.getUser(id_user)
-  localStorage.setItem('cur_user', JSON.stringify(get_cur_user))
-  window.location.href = `detail.html`
-}
-
+// render user'info in detail.html
 function apiRenderUserInfo() {
   const parse_cur_user = JSON.parse(localStorage.getItem('cur_user'))
   const cur_user = parse_cur_user ? parse_cur_user : {}
@@ -161,4 +167,7 @@ function apiRenderUserInfo() {
   document.getElementById("country").innerText = cur_user["country"]
   document.getElementById("email").innerText = cur_user["email"]
   document.getElementById("phone").innerText = cur_user["phone"]
+  document.getElementById("update").onclick = () => {
+    apiRedirect(cur_user["id_user"], "edit.html")
+  }
 }
