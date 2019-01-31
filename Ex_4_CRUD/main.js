@@ -32,6 +32,19 @@ class Data {
 
 var data = new Data()
 
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+function validatePhone(phone) {
+  var re = /(09|01[2|6|8|9])+([0-9]{8})\b/g;
+  return re.test(phone);
+}
+function validateBirthday(birthday) {
+  var re = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
+  return re.test(birthday);
+}
+
 function makeID () {
   var text_id = '';
   var character = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -97,22 +110,25 @@ function apiCreate() {
   const inp_email = document.getElementById("email").value
   const inp_phone = document.getElementById("phone").value
   if((inp_name && inp_phone && inp_birthday) !== "") {
-    const user = {
-      id_user: makeID(),
-      name: inp_name,
-      birthday: inp_birthday,
-      country: inp_country,
-      email: inp_email,
-      phone: inp_phone
+    if(validateEmail(inp_email) && validatePhone(inp_phone) && validateBirthday(inp_birthday)) {
+      const user = {
+        id_user: makeID(),
+        name: inp_name,
+        birthday: inp_birthday,
+        country: inp_country,
+        email: inp_email,
+        phone: inp_phone
+      }
+      data.createUser(user)
+      data.writeLocal()
+      window.history.back()
     }
-    data.createUser(user)
-    data.writeLocal()
-    window.history.back()
+    else {
+      alert("the input was not valid")
+      return false
+    }
   }
-  else {
-    alert("Name, Birthday and Phone must be filled out");
-    return false
-  }
+  else alert("Name, Birthday and Phone must be filled out");
 }
 
 // delete a user
@@ -157,15 +173,18 @@ function apiUpdate() {
     phone: document.getElementById("phone").value
   }
   if((user.name && user.birthday && user.phone) !== ""){
-    data.updateUser(user)
-    data.writeLocal()
-    localStorage.setItem('cur_user', JSON.stringify(user)) // update cur_user's info
-    window.history.back()
+    if(validateEmail(user.email) && validatePhone(user.phone) && validateBirthday(user.birthday)) {
+      data.updateUser(user)
+      data.writeLocal()
+      localStorage.setItem('cur_user', JSON.stringify(user)) // update cur_user's info
+      window.history.back()
+    }
+    else {
+      alert("the input was not valid")
+      return false
+    }
   }
-  else {
-    alert("Name, Birthday and Phone must be filled out");
-    return false
-  }
+  else alert("Name, Birthday and Phone must be filled out");
 }
 
 // render user'info in detail.html
