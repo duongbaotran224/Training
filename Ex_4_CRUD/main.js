@@ -4,7 +4,6 @@ class Data {
     this.list_users = parse_list ? parse_list : []
   }
   createUser(user) {
-    console.log(this.list_users)
     this.list_users.push(user)
   }
   deleteUser(id_user) {
@@ -19,13 +18,12 @@ class Data {
     return this.list_users
   }
   updateUser(user) {
-    const user_info = this.getUser(user.id_user)
-    for (var props in user_info) {
-      user_info[props] = user[props]
+    const old_user_info = this.getUser(user.id_user)
+    for (var props in old_user_info) {
+      old_user_info[props] = user[props]
     }
   }
   writeLocal() {
-    console.log('write', localStorage.cur_user)
     localStorage.setItem('list_users', JSON.stringify(this.list_users))
   }
 }
@@ -98,17 +96,23 @@ function apiCreate() {
   const inp_country = document.getElementById("country").value
   const inp_email = document.getElementById("email").value
   const inp_phone = document.getElementById("phone").value
-  const user = {
-    id_user: makeID(),
-    name: inp_name,
-    birthday: inp_birthday,
-    country: inp_country,
-    email: inp_email,
-    phone: inp_phone
+  if((inp_name && inp_phone && inp_birthday) !== "") {
+    const user = {
+      id_user: makeID(),
+      name: inp_name,
+      birthday: inp_birthday,
+      country: inp_country,
+      email: inp_email,
+      phone: inp_phone
+    }
+    data.createUser(user)
+    data.writeLocal()
+    window.history.back()
   }
-  data.createUser(user)
-  data.writeLocal()
-  window.history.back()
+  else {
+    alert("Name, Birthday and Phone must be filled out");
+    return false
+  }
 }
 
 // delete a user
@@ -152,10 +156,16 @@ function apiUpdate() {
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value
   }
-  data.updateUser(user)
-  data.writeLocal()
-  localStorage.setItem('cur_user', JSON.stringify(user))
-  window.history.back()
+  if((user.name && user.birthday && user.phone) !== ""){
+    data.updateUser(user)
+    data.writeLocal()
+    localStorage.setItem('cur_user', JSON.stringify(user)) // update cur_user's info
+    window.history.back()
+  }
+  else {
+    alert("Name, Birthday and Phone must be filled out");
+    return false
+  }
 }
 
 // render user'info in detail.html
