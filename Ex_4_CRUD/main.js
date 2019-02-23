@@ -60,7 +60,7 @@ function apiRenderAll() {
   // add rows to table
   for (let i = 0; i < all_users.length; i++) {
     var tr = document.createElement('tr');
-    tr.onclick = () => apiRedirect(all_users[i].id_user, 'detail.html')
+    tr.onclick = () => apiRedirect(all_users[i].id_user, `detail.html?id=${all_users[i].id_user}`)
 
     // createElement of row
     var td_num = document.createElement('td');
