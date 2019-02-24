@@ -10,11 +10,11 @@ function isInt(...args) {
 
 function isValidation(b1, w1, b2, w2, ground) {
   isInt(b1, w1, b2, w2, ground)
-  check_b1 = (b1 < 99 || b1 > 999) ? false : true
-  check_w1 = (w1 < 0 || w1 > 3) ? false : true
-  check_w2 = (w2 < 0 || w2 > 3) ? false : true
-  check_b2 = (b2 < 1 || b2 > 888) ? false : true
-  check_ground = (ground < 1 || ground > 999) ? false : true
+  check_b1 = (b1 > 99 && b1 < 999) ? true : false
+  check_w1 = (w1 > 0 && w1 < 3) ? true : false
+  check_w2 = (w2 > 0 && w2 < 3) ? true : false
+  check_b2 = (b2 > 1 && b2 < 888) ? true : false
+  check_ground = (ground > 1 && ground < 999) ? true : false
   if(!((check_b1 && check_b2) && (check_w1 && check_w2 && check_ground))) {
     throw Error('It is not valid input')
   }
