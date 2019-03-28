@@ -5,7 +5,8 @@ import Create from './Create.js'
 
 class Home extends React.Component {
 
-  handleDelete = (id) => {
+  handleDelete = (e, id) => {
+    e.stopPropagation()
     this.props.deleteUser(id)
   }
 
@@ -36,8 +37,10 @@ class Home extends React.Component {
                 <td>{item.name.value}</td>
                 <td>{item.birthday.value}</td>
                 <td>
-                <button><Link to={`/edit/${item.id}`}>Update</Link></button>
-                <button onClick={() => this.handleDelete(item.id)}>
+                <button>
+                  <Link to={`/edit/${item.id}`}>Update</Link>
+                </button>
+                <button onClick={(e) => this.handleDelete(e, item.id)}>
                   Delete
                 </button>
                 </td>

@@ -14,8 +14,9 @@ class Main extends React.Component {
       userList: parse_list ? parse_list : []
     }
   }
+
   writeLocal = () => {
-    console.log(this.state.userList)
+    // console.log(this.state.userList)
     localStorage.setItem('list_users', JSON.stringify(this.state.userList))
   }
 
@@ -78,8 +79,7 @@ class Main extends React.Component {
         />}
       />
       <Route path='/detail/:id'
-        render={props => <Detail {...props} getUser={this.getUser}
-        />}
+        render={props => <Detail {...props} getUser={this.getUser}/>}
       />
       </Switch>
       </div>

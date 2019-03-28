@@ -1,13 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
+function makeID() {
+  var text_id = '';
+  var character = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 10; i++){
+    text_id += character.charAt((Math.floor(Math.random() * character.length)))
+  }
+  return text_id
+}
 
 class Create extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       userForm: {
-        id: Math.random(),
+        id: makeID(),
         name: {
           value: ''
         },
@@ -40,7 +48,8 @@ class Create extends React.Component {
     let localList = this.props.getUserList()
     localList.push(userFormNew)
     this.props.writeLocal()
-    this.props.history.push('/')
+    this.props.history.goBack()
+    // this.props.history.push('/')
     // console.log(this.state.userList, JSON.stringify(this.state.userList))
   }
 
