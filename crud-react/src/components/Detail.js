@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 class Edit extends React.Component {
   render() {
@@ -23,8 +24,9 @@ class Edit extends React.Component {
     }
 
 
-    console.log(this.props.getUserDetails(this.props.match.params.id))
-    const data = this.props.getUserDetails(this.props.match.params.id)
+    // console.log(this.props.getUser(this.props.match.params.id))
+    const id = this.props.match.params.id
+    const data = this.props.getUser(id)
     return (
       <div>
         <h1>Detail</h1>
@@ -33,6 +35,8 @@ class Edit extends React.Component {
           <div style={style.info}>
             <div>{data.name.value}</div>
             <div>{data.birthday.value}</div>
+            <button><Link to={`/edit/${id}`}>Update</Link></button>
+            <button><Link to="/">Back</Link></button>
           </div>
         </div>
       </div>

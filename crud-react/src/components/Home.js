@@ -15,7 +15,7 @@ class Home extends React.Component {
 
   render() {
     // console.log(this.props.getUserList())
-    let data = this.props.getUserList()
+    const data = this.props.getUserList()
 
     return (
       <div>
@@ -36,7 +36,7 @@ class Home extends React.Component {
                 <td>{item.name.value}</td>
                 <td>{item.birthday.value}</td>
                 <td>
-                <button><Link to={`/edit/${index}`}>Update</Link></button>
+                <button><Link to={`/edit/${item.id}`}>Update</Link></button>
                 <button onClick={() => this.handleDelete(item.id)}>
                   Delete
                 </button>

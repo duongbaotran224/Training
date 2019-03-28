@@ -37,7 +37,7 @@ class Main extends React.Component {
         item.id !== id
       )
     })
-    console.log(newList)
+    // console.log(newList)
     this.setState((state)=>(
       {
         userList: newList,
@@ -45,7 +45,7 @@ class Main extends React.Component {
     ))
     localStorage.setItem('list_users', JSON.stringify(newList))
   }
-  getUserDetails = (id) => {
+  getUser = (id) => {
     let user = this.state.userList.filter((item) => {
       return (
         item.id == id
@@ -73,12 +73,12 @@ class Main extends React.Component {
         />
       <Route
         path='/edit/:id'
-        render={props => <Edit {...props} getUserList={this.getUserList}
+        render={props => <Edit {...props} getUser={this.getUser}
         writeLocal={this.writeLocal}
         />}
       />
       <Route path='/detail/:id'
-        render={props => <Detail {...props} getUserDetails={this.getUserDetails}
+        render={props => <Detail {...props} getUser={this.getUser}
         />}
       />
       </Switch>

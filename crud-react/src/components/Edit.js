@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom'
 class Edit extends React.Component {
   constructor(props){
     super(props)
-    const data = this.props.getUserList()
     const id = this.props.match.params.id
+    const data = this.props.getUser(id)
     this.state = {
       userForm: {
-        id: data[id].id,
+        id: data.id,
         name: {
-          value: data[id].name.value
+          value: data.name.value
         },
         birthday: {
-          value: data[id].birthday.value
+          value: data.birthday.value
         }
       }
     }
@@ -41,17 +41,21 @@ class Edit extends React.Component {
     e.preventDefault()
     const userFormNew = this.state.userForm
     const id = this.props.match.params.id
-    const old_user_info = this.props.getUserList()[id]
+    const old_user_info = this.props.getUser(id)
     for (var props in old_user_info) {
       old_user_info[props] = userFormNew[props]
     }
     // console.log(old_user_info)
     this.props.writeLocal()
-    this.props.history.push('/')
+    this.props.history.goBack()
+  }
+  goBack = (e) => {
+    e.preventDefault()
+    this.props.history.goBack()
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <div>
       <h1>Edit</h1>
@@ -65,7 +69,7 @@ class Edit extends React.Component {
               value={this.state.userForm.birthday.value}>
       </input>
       <button onClick={this.handleSubmit}>Submit</button>
-      <button><Link to="/">Back</Link></button>
+      <button onClick={this.goBack}>Back</button>
       </form>
       </div>
     );
