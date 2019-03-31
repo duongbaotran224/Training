@@ -37,7 +37,7 @@ class Home extends React.Component {
                 <td>{item.name.value}</td>
                 <td>{item.birthday.value}</td>
                 <td>
-                <button>
+                <button onClick={(e) => e.stopPropagation()}>
                   <Link to={`/edit/${item.id}`}>Update</Link>
                 </button>
                 <button onClick={(e) => this.handleDelete(e, item.id)}>
