@@ -5,17 +5,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 
-
 class Edit extends React.Component {
   constructor(props){
     super(props)
     const getUser = (id) => {
-      let user = props.data.filter((item) => {
-        return (
-          item.id == id
-        )
-      })
-      return user[0]
+      let user = props.data.find(item => item.id == id)
+      return user
     }
     const id = props.match.params.id
 

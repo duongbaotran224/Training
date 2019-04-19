@@ -2,12 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { deleteUser } from '../actions'
+import { withRouter } from "react-router";
+
 
 class Home extends React.Component{
 
-  handleDelete = (id) => {
-    // const newList = this.props.data.filter((item) => item.id !== id)
+  handleDelete = (e, id) => {
+    e.stopPropagation()
     this.props.dispatch(deleteUser(id))
+  }
+  gotoDetail = (id) => {
+    console.log(this.props.history)
+    this.props.history.push(`/detail/${id}`)
   }
 
   render() {
@@ -26,7 +32,7 @@ class Home extends React.Component{
         {
           data.map((item, index) => {
             return (
-              <tr key={item.id}>
+              <tr key={item.id} onClick={() => this.gotoDetail(item.id)}>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.birthday}</td>
@@ -34,7 +40,7 @@ class Home extends React.Component{
                 <button onClick={(e) => e.stopPropagation()}>
                   <Link to={`/edit/${item.id}`}>Update</Link>
                 </button>
-                <button onClick={() => this.handleDelete(item.id)}>
+                <button onClick={(e) => this.handleDelete(e, item.id)}>
                   Delete
                 </button>
                 </td>
@@ -50,4 +56,4 @@ class Home extends React.Component{
   }
 }
 
-export default connect()( Home)
+export default withRouter(connect()( Home))

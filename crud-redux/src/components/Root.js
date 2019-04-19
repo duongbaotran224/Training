@@ -6,15 +6,18 @@ import { Switch, Route } from 'react-router-dom'
 import Create from './Create'
 import Home from './Home'
 import Edit from './Edit'
+import Detail from './Detail'
 
 const Root = ({store}) => {
   console.log(store.getState().users)
+
   return (<Provider store={store}>
     <Router>
       <Switch>
         <Route exact path='/' render={props => <Home {...props} data={store.getState().users}/>}/>
-        <Route path='/create' render={props => <Create {...props}/>}/>
+        <Route exact path='/create' render={props => <Create {...props}/>}/>
         <Route path='/edit/:id' render={props => <Edit {...props} data={store.getState().users}/>}/>
+        <Route exact path='/detail/:id' render={props => <Detail {...props} data={store.getState().users}/>}/>
       </Switch>
     </Router>
   </Provider>)
