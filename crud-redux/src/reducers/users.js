@@ -15,6 +15,9 @@ const users = (state =  initList, action) => {
           id: action.id,
           name: action.name,
           birthday: action.birthday,
+          country: action.country,
+          email: action.email,
+          phone: action.phone,
         }
       ]
 

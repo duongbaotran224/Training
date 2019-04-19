@@ -9,6 +9,9 @@ export const addUser = (user) => ({
   id: user.id,
   name: user.name,
   birthday: user.birthday,
+  country: user.country,
+  phone: user.phone,
+  email: user.email,
 })
 
 export const deleteUser = (id) => ({
@@ -22,5 +25,8 @@ export const updateUser = (user) => ({
   updated_infos: {
     name: user.name,
     birthday: user.birthday,
+    country: user.country,
+    phone: user.phone,
+    email: user.email,
   }
 })

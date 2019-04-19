@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-class Edit extends React.Component {
+class Detail extends React.Component {
   render() {
     const style = {
       wrap: {
@@ -23,14 +23,8 @@ class Edit extends React.Component {
       }
     }
 
-
-    // console.log(this.props.getUser(this.props.match.params.id))
     const id = this.props.match.params.id
-    const getUser = (id) => {
-      let user = this.props.data.find(item => item.id == id)
-      return user
-    }
-    const data = getUser(id)
+    const data = this.props.getUser(id)
     return (
       <div>
         <h1>Detail</h1>
@@ -39,6 +33,9 @@ class Edit extends React.Component {
           <div style={style.info}>
             <div>{data.name}</div>
             <div>{data.birthday}</div>
+            <div>{data.country}</div>
+            <div>{data.email}</div>
+            <div>{data.phone}</div>
             <button><Link to={`/edit/${id}`}>Update</Link></button>
             <button><Link to="/">Back</Link></button>
           </div>
@@ -48,4 +45,4 @@ class Edit extends React.Component {
   }
 }
 
-export default Edit;
+export default Detail;

@@ -2,22 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { updateUser } from '../actions'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import {validation} from './Validate.js'
+import style from '../style.js'
 
 
 class Edit extends React.Component {
   constructor(props){
     super(props)
-    const getUser = (id) => {
-      let user = props.data.find(item => item.id == id)
-      return user
-    }
     const id = props.match.params.id
-
     this.state = {
       id: id,
-      name: getUser(id).name ,
-      birthday: getUser(id).birthday
+      name: props.getUser(id).name,
+      birthday: props.getUser(id).birthday,
+      country: props.getUser(id).country,
+      email: props.getUser(id).email,
+      phone: props.getUser(id).phone,
     }
   }
 
@@ -29,24 +28,49 @@ class Edit extends React.Component {
   }
 
   onSubmit = (e) => {
+    const {name, birthday, email, phone} = this.state
     e.preventDefault()
-    this.props.dispatch(updateUser(this.state))
-    this.props.history.goBack()
+    if(!name || !birthday || !email) {
+      alert("Name, Birthday and Phone must be filled out");
+    }
+    else if(validation(email, birthday, phone)){
+      alert("invalid input")
+    }
+    else {
+      this.props.dispatch(updateUser(this.state))
+      this.props.history.goBack()
+    }
   }
 
   render() {
-  console.log(this.props, this.state)
     return (
-      <div>
+      <div style={style.container}>
       <h1>Edit</h1>
-      <form>
+      <form style={style.form}>
       <input  name="name"
+              placeholder="Name"
               onChange={this.handleChange}
               value={this.state.name}>
       </input>
       <input  name="birthday"
+              placeholder="Birthday"
               onChange={this.handleChange}
               value={this.state.birthday}>
+      </input>
+      <input  name="country"
+              placeholder="Country"
+              onChange={this.handleChange}
+              value={this.state.country}>
+      </input>
+      <input  name="email"
+              placeholder="Email"
+              onChange={this.handleChange}
+              value={this.state.email}>
+      </input>
+      <input  name="phone"
+              placeholder="Phone"
+              onChange={this.handleChange}
+              value={this.state.phone}>
       </input>
       <button onClick={this.onSubmit}>Submit</button>
       <button><Link to="/">Back</Link></button>
