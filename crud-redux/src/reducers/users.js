@@ -6,35 +6,37 @@ const initList = [
   }
 ]
 
-const users = (state = initList, action) => {
+const users = (state =  initList, action) => {
   switch (action.type) {
     case 'ADD_USER':
-    return [
-      ...state,
-      {
-        id: action.id,
-        name: action.name,
-        birthday: action.birthday,
-      }
-    ]
-    case 'DELETE_USER':
-    // console.log(state, action)
-    return [
-      ...state.filter((item) => item.id !== action.id)
-    ]
-    case 'UPDATE_USER':
-    const updatedUser = state.map(item => {
-      if(item.id === action.id) {
-        return {
-          ...item,
-          ...action.updated_infos
+      return [
+        ...state,
+        {
+          id: action.id,
+          name: action.name,
+          birthday: action.birthday,
         }
-      }
-      return item
-    })
-    return [
-      ...updatedUser
-    ]
+      ]
+
+    case 'DELETE_USER':
+      return [
+        ...state.filter((item) => item.id !== action.id)
+      ]
+
+    case 'UPDATE_USER':
+      const updatedUser = state.map(item => {
+        if(item.id === action.id) {
+          return {
+            ...item,
+            ...action.updated_infos
+          }
+        }
+        return item
+      })
+      return [
+        ...updatedUser
+      ]
+
     default:
     return state
   }

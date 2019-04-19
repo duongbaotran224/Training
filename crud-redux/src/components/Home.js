@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { deleteUser } from '../actions'
-import { withRouter } from "react-router";
 
 
 class Home extends React.Component{
@@ -12,12 +11,11 @@ class Home extends React.Component{
     this.props.dispatch(deleteUser(id))
   }
   gotoDetail = (id) => {
-    console.log(this.props.history)
     this.props.history.push(`/detail/${id}`)
   }
 
   render() {
-  const data = this.props.data
+  const { users } = this.props
     return (
       <div>
       <table id="myID"  style={{width: "100%"}}>
@@ -30,7 +28,7 @@ class Home extends React.Component{
         </thead>
         <tbody id="myID"  style={{width: "100%"}}>
         {
-          data.map((item, index) => {
+          users.map((item, index) => {
             return (
               <tr key={item.id} onClick={() => this.gotoDetail(item.id)}>
                 <td>{index + 1}</td>
@@ -56,4 +54,12 @@ class Home extends React.Component{
   }
 }
 
-export default withRouter(connect()( Home))
+function mapStateToProps(state) {
+  console.log(state)
+  const { users } = state
+  return {
+    users
+  }
+}
+
+export default connect(mapStateToProps)( Home)
